@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SQL Query Runner</title>
+</head>
+<body>
+  <h2>Run SQL Query</h2>
+  <textarea id="query" rows="5" cols="60">SELECT * FROM Employees</textarea><br>
+  <button onclick="runQuery()">Run</button>
+  <pre id="result"></pre>
+  <script>
+    async function runQuery() {
+      const query = document.getElementById('query').value;
+      const res = await fetch('/run_query', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({query})
+      });
+      const data = await res.json();
+      document.getElementById('result').textContent = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
